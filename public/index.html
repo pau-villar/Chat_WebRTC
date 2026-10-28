@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat P2P</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="pantalla-nombre">
+    <h1>Chat P2P</h1>
+    <input id="input-nombre" placeholder="Tu nombre">
+    <button id="boton-entrar">Entrar</button>
+  </div>
+
+  <div id="pantalla-usuarios" class="oculto">
+    <h2>Conectados (<span id="mi-nombre"></span>)</h2>
+    <ul id="lista-usuarios"></ul>
+    <p id="sin-usuarios">No hay nadie más conectado.</p>
+  </div>
+
+  <div id="pantalla-chat" class="oculto">
+    <button id="boton-volver">← Volver</button>
+    <h2>Chat con <span id="nombre-otro"></span></h2>
+    <div id="mensajes"></div>
+    <input id="input-mensaje" placeholder="Escribe un mensaje...">
+    <button id="boton-enviar">Enviar</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

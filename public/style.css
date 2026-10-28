@@ -1,0 +1,11 @@
+body { font-family: Arial, sans-serif; max-width: 400px; margin: 20px auto; }
+.oculto { display: none; }
+#lista-usuarios { list-style: none; padding: 0; }
+#lista-usuarios li { padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; cursor: pointer; }
+#lista-usuarios li:hover { background: #eee; }
+
+#mensajes { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+.mensaje { margin-bottom: 5px; padding: 5px 10px; border-radius: 8px; max-width: 70%; }
+.mio { background: #2563eb; color: white; margin-left: auto; }
+.suyo { background: #eee; }
+.sistema { color: #888; font-size: 12px; text-align: center; max-width: 100%; }
