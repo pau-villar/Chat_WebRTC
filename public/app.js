@@ -20,7 +20,12 @@ document.getElementById('boton-entrar').onclick = () => {
     if (datos.tipo === 'bienvenida') miId = datos.id;
     if (datos.tipo === 'usuarios') mostrarUsuarios(datos.usuarios);
     if (datos.tipo === 'senal') recibirSenal(datos);
+    if (datos.tipo === 'ocupado') recibirOcupado(datos);
   };
+};
+
+document.getElementById('input-nombre').onkeydown = evento => {
+  if (evento.key === 'Enter') document.getElementById('boton-entrar').onclick();
 };
 
 function mostrarUsuarios(usuarios) {
@@ -54,7 +59,6 @@ function crearPeer(idRemoto, iniciador) {
   otroId = idRemoto;
   peer = new SimplePeer({ initiator: iniciador });
 
-  // simple-peer genera datos de señalización y nos pide que se los hagamos llegar al otro
   peer.on('signal', datos => {
     enviar({ tipo: 'senal', para: otroId, datos });
   });
@@ -63,6 +67,8 @@ function crearPeer(idRemoto, iniciador) {
     const otro = listaUsuarios.find(u => u.id === otroId);
     document.getElementById('nombre-otro').textContent = otro ? otro.nombre : 'usuario';
     document.getElementById('mensajes').innerHTML = '';
+    document.getElementById('input-mensaje').disabled = false;
+    document.getElementById('boton-enviar').disabled = false;
     mostrarPantalla('pantalla-chat');
   });
 
@@ -72,21 +78,41 @@ function crearPeer(idRemoto, iniciador) {
 
   peer.on('close', () => {
     añadirMensaje('La conexión se ha cerrado.', 'sistema');
+    document.getElementById('input-mensaje').disabled = true;
+    document.getElementById('boton-enviar').disabled = true;
     peer = null;
   });
 
   peer.on('error', error => console.log('Error:', error.message));
 }
 
-// Lado que inicia (el que pulsa en la lista)
 function llamar(idRemoto) {
+  if (peer) return; // ya hay una conexión en marcha
   crearPeer(idRemoto, true);
 }
 
-// Llega una señal del otro lado
 function recibirSenal(datos) {
-  if (!peer) crearPeer(datos.de, false); // si es la primera, creamos nuestro peer
+  // Ya estoy con otra persona: le aviso de que estoy ocupado
+  if (peer && datos.de !== otroId) {
+    enviar({ tipo: 'ocupado', para: datos.de });
+    return;
+  }
+
+  if (!peer) {
+    // Solo una oferta puede iniciar una conexión nueva.
+    // Cualquier otra señal es de una conexión que ya se cerró.
+    if (datos.datos.type !== 'offer') return;
+    crearPeer(datos.de, false);
+  }
+
   peer.signal(datos.datos);
+}
+
+function recibirOcupado(datos) {
+  if (!peer || datos.de !== otroId) return;
+  peer.destroy();
+  peer = null;
+  alert('Ese usuario está en otro chat.');
 }
 
 // ---------- Pantalla de chat ----------

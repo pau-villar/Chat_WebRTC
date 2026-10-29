@@ -30,7 +30,7 @@ wss.on('connection', socket => {
       enviarLista();
     }
 
-    if (datos.tipo === 'senal') {
+    if (['senal', 'ocupado'].includes(datos.tipo)) {
       const destino = usuarios.find(u => u.id === datos.para);
       if (destino) {
         datos.de = miId; // lo añade el servidor para que el destinatario sepa quién lo envía

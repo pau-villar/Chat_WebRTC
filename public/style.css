@@ -1,11 +1,86 @@
-body { font-family: Arial, sans-serif; max-width: 400px; margin: 20px auto; }
-.oculto { display: none; }
-#lista-usuarios { list-style: none; padding: 0; }
-#lista-usuarios li { padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; cursor: pointer; }
-#lista-usuarios li:hover { background: #eee; }
+* { box-sizing: border-box; }
 
-#mensajes { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
-.mensaje { margin-bottom: 5px; padding: 5px 10px; border-radius: 8px; max-width: 70%; }
-.mio { background: #2563eb; color: white; margin-left: auto; }
-.suyo { background: #eee; }
-.sistema { color: #888; font-size: 12px; text-align: center; max-width: 100%; }
+body {
+  font-family: system-ui, Arial, sans-serif;
+  max-width: 420px;
+  margin: 30px auto;
+  padding: 0 16px;
+  color: #222;
+}
+
+.oculto { display: none !important; }
+
+h1, h2 { margin-top: 0; }
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 4px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+button:disabled, input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Nombre */
+#input-nombre { width: 65%; }
+
+/* Lista de usuarios */
+#lista-usuarios { list-style: none; padding: 0; }
+
+#lista-usuarios li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+#lista-usuarios li:hover { background: #f3f4f6; }
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+#sin-usuarios { color: #888; }
+
+/* Chat */
+#boton-volver { background: #e5e7eb; color: #333; margin-bottom: 10px; }
+
+#mensajes {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mensaje { padding: 6px 10px; border-radius: 10px; max-width: 75%; word-break: break-word; }
+.mio { background: #2563eb; color: white; align-self: flex-end; }
+.suyo { background: #eee; align-self: flex-start; }
+.sistema { color: #888; font-size: 12px; align-self: center; }
+
+.barra-envio { display: flex; gap: 6px; }
+.barra-envio input { flex: 1; }
